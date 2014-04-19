@@ -11,12 +11,12 @@ gulp.task("test", function () {
 });
 
 gulp.task("lint", function () {
-  gulp.src(["app.js", "api/**/*.js"])
+  gulp.src(["gtt", "api/**/*.js"])
     .pipe(jshint());
 });
 
 gulp.task("default", function () {
-  gulp.watch(["app.js", "api/**", "test/**"], function() {
+  gulp.watch(["gtt", "api/**", "test/**"], function() {
     gulp.run("test");
   });
 });
