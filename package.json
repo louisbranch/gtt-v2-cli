@@ -11,8 +11,11 @@
   "dependencies": {
     "commander": "^2.2.0",
     "cli-color": "^0.2.3",
-    "prompt": "^0.2.12",
-    "request": "^2.34.0"
+    "co-request": "~0.2.0",
+    "co": "~3.0.5",
+    "co-prompt": "~1.0.0",
+    "lodash": "~2.4.1",
+    "thunkify": "~2.1.1"
   },
   "devDependencies": {
     "gulp-exec": "~1.0.4",

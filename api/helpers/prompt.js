@@ -1,40 +1,31 @@
-var prompt = require("prompt");
-prompt.message = "";
-prompt.delimiter = "";
+var prompt = require("co-prompt");
+var _ = require("lodash");
 
 module.exports = {
   credentials: credentials,
   project: project
 };
 
-function credentials(callback) {
-  var schema = {
-    properties: {
-      user: {
-        message: "Do you have a gtt account?",
-        validator: /^(y|n)(?:es|o)?$/i,
-        default: "yes"
-      },
-      email: {
-        required: true,
-        message: "email:"
-      },
-      password: {
-        hidden: true,
-        required: true,
-        message: "password:"
-      }
-    }
-  };
-
+function *credentials() {
   process.stdout.write("Initializing Git Time Tracker\n");
-  prompt.start();
-  prompt.get(schema, function (err, result) {
-    result.user = result.user[0].toLowerCase() === "y";
-    callback(result);
-  });
+  return {
+    user: yield prompt.confirm("are you a new user? "),
+    email: yield prompt("email: "),
+    password: yield prompt.password("password: ")
+  };
 }
 
-function project() {
-  //TODO
+function *project(projects) {
+  if (projects.length) {
+    process.stdout.write("choose a project or create a new one:\n");
+    process.stdout.write(projects.join(", ") + "\n");
+  }
+  var name = yield prompt("project name: ");
+  if (_.contains(projects, name)) return {name: name};
+
+  return {
+    name: name,
+    currency: (yield prompt("currency: [usd] ")) || "usd",
+    rate: (yield prompt("cost per hour: [0] ")) || "0"
+  };
 }
