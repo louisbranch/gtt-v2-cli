@@ -9,7 +9,7 @@ module.exports = {
 function *credentials() {
   process.stdout.write("Initializing Git Time Tracker\n");
   return {
-    user: yield prompt.confirm("are you a new user? "),
+    user: yield prompt.confirm("do have a gtt account? "),
     email: yield prompt("email: "),
     password: yield prompt.password("password: ")
   };
