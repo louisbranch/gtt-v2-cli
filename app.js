@@ -1,5 +1,6 @@
 var app = require("commander");
 var init = require("./api/cmds/init");
+var start = require("./api/cmds/start");
 
 app
   .version("0.0.1")
@@ -13,4 +14,5 @@ app
   .parse(process.argv);
 
 if (process.argv.length == 2) app.help(); // Defaults to help
-if (app.init) init(app);
+if (app.init) init();
+if (app.start) start();

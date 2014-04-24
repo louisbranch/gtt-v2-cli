@@ -6,7 +6,7 @@ var config = require("../helpers/config");
 var output = require("../helpers/output");
 var prompt = require("../helpers/prompt");
 
-module.exports = function (app) {
+module.exports = function () {
   co(function* () {
     var credentials, user, project;
 
@@ -22,6 +22,6 @@ module.exports = function (app) {
     } catch (e) {
       output.error(e);
     }
-    output.success("gtt initialized! You may want to add '.gtt' to .gitignore");
+    output.success("gtt initialized\n You may want to add '.gtt' to .gitignore");
   })();
 };
