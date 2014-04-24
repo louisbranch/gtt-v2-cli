@@ -11,18 +11,21 @@ module.exports = {
 };
 
 function *get() {
-  var file;
+  var file, json;
   try {
     file = yield read(FILE);
+    json = JSON.parse(file);
   } catch (e) {
   }
-  return file;
+  return json;
 }
 
 function *create(user, project) {
-  var config = "email=" + user.email + "\n" +
-               "token=" + user.token + "\n" +
-               "project=" + project.name + "\n";
+  var config = '{\n' +
+                 ' "email": "' + user.email + '",\n' +
+                 ' "token": "' + user.token + '",\n' +
+                 ' "project": "' + project.name + '"\n' +
+               '}\n'
   yield write(FILE, config);
 }
 
