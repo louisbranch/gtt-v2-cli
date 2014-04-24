@@ -7,12 +7,6 @@ describe("user model", function(){
 
   describe("signup", function(){
 
-    var credentials = {
-      email: "me@luizbranco.com",
-      password: "secret",
-      user: false
-    };
-
     before(function(){
       nock("http://localhost:8080/")
         .post("/v1/signup?email=me@luizbranco.com&password=secret")
@@ -20,6 +14,12 @@ describe("user model", function(){
     });
 
     it("returns user info", function(done){
+      var credentials = {
+        email: "me@luizbranco.com",
+        password: "secret",
+        user: false
+      };
+
       co(function* () {
         var response = yield model.authenticate(credentials);
         assert.deepEqual({
@@ -35,12 +35,6 @@ describe("user model", function(){
 
   describe("login", function(){
 
-    var credentials = {
-      email: "me@luizbranco.com",
-      password: "secret",
-      user: true
-    };
-
     before(function(){
       nock("http://localhost:8080/")
         .post("/v1/login?email=me@luizbranco.com&password=secret")
@@ -52,6 +46,12 @@ describe("user model", function(){
     });
 
     it("returns user info", function(done){
+      var credentials = {
+        email: "me@luizbranco.com",
+        password: "secret",
+        user: true
+      };
+
       co(function* () {
         var response = yield model.authenticate(credentials);
         assert.deepEqual({
