@@ -4,11 +4,11 @@ var thunk = require("thunkify");
 var FILE = ".gtt";
 
 module.exports = {
-  get: get,
-  create: create
+  read: read,
+  write: write
 };
 
-function *get() {
+function *read() {
   var read = thunk(fs.readFile);
   var file, json;
   try {
@@ -16,11 +16,12 @@ function *get() {
     json = JSON.parse(file);
   } catch (e) {
     if (e === "ENOENT") throw(".gtt file not found");
+    if (e instanceof SyntaxError) throw("invalid .gtt file");
   }
   return json;
 }
 
-function *create(user, project) {
+function *write(user, project) {
   var write = thunk(fs.writeFile);
   var config = '{\n' +
                  ' "email": "' + user.email + '",\n' +

@@ -10,8 +10,8 @@ module.exports = function () {
   co(function* () {
     var credentials, user, project;
 
-    var file = yield config.get();
-    if (file) output.error("gtt file already exists for this project");;
+    var file = yield config.read();
+    if (file) output.error("gtt file already exists for this project");
 
     try {
       credentials = yield prompt.credentials();

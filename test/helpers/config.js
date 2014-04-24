@@ -5,9 +5,9 @@ var config = require("../../api/helpers/config");
 
 describe("config helper", function(){
 
-  describe("create", function(){
+  describe("write", function(){
 
-    it("creates a .gtt file with project info", function(done){
+    it("writes a .gtt file with project info", function(done){
       var user = {
         email: "me@luizbranco.com",
         token: "12345"
@@ -18,7 +18,7 @@ describe("config helper", function(){
       };
 
       co(function* () {
-        yield config.create(user, project);
+        yield config.write(user, project);
       })();
 
       fs.exists(".gtt", function (exists) {
@@ -29,26 +29,49 @@ describe("config helper", function(){
 
   });
 
-  describe("get", function(){
-    var info;
+  describe("read", function(){
 
-    before(function(done){
-      co(function* () {
-        info = yield config.get();
-        done();
-      })();
+    describe("when file is readable", function(){
+      var info;
+
+      before(function(done){
+        co(function* () {
+          info = yield config.read();
+          done();
+        })();
+      });
+
+      it("has a user email", function(){
+        assert.equal("me@luizbranco.com", info.email);
+      });
+
+      it("has a user token", function(){
+        assert.equal("12345", info.token);
+      });
+
+      it("has a project name", function(){
+        assert.equal("test", info.project);
+      });
+
     });
 
-    it("has a user email", function(){
-      assert.equal("me@luizbranco.com", info.email);
+    describe("when file doesn't exist", function(){
+
+      xit("throws an error", function(){
+      });
+
     });
 
-    it("has a user token", function(){
-      assert.equal("12345", info.token);
-    });
+    describe("when file has invalid syntax ", function(){
 
-    it("has a project name", function(){
-      assert.equal("test", info.project);
+      it("throws an error", function(){
+        assert.throws(function () {
+          var gen = config.read();
+          gen.next();
+          gen.next("{{");
+        }, /invalid .gtt file/);
+      });
+
     });
 
   });
