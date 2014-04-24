@@ -1,5 +1,4 @@
-var request = require("co-request");
-var SERVER = "http://localhost:8080/v1";
+var request = require("../helpers/request");
 
 module.exports = {
   authenticate: authenticate
@@ -11,20 +10,18 @@ function *authenticate(credentials) {
 }
 
 function *login(credentials) {
-  var url = SERVER + "/login?email=" + credentials.email +
+  var url = "/login?email=" + credentials.email +
             "&password=" + credentials.password;
-  var result = yield request.post(url);
-  if (result.statusCode !== 200) throw result.body;
-  return JSON.parse(result.body);
+  var res = yield request.post(url);
+  return JSON.parse(res);
 }
 
 function *signup(credentials) {
-  var url = SERVER + "/signup?email=" + credentials.email +
+  var url = "/signup?email=" + credentials.email +
             "&password=" + credentials.password;
-  var result = yield request.post(url);
-  if (result.statusCode !== 200) throw result.body;
+  var res = yield request.post(url);
   return {
-    token: result.body,
+    token: res,
     email: credentials.email,
     projects: []
   };
