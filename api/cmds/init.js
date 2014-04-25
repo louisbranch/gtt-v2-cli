@@ -8,9 +8,11 @@ var prompt = require("../helpers/prompt");
 
 module.exports = function () {
   co(function* () {
-    var credentials, user, project;
+    var credentials, file, user, project;
 
-    var file = yield config.read();
+    try {
+      file = yield config.read();
+    } catch (e) { }
     if (file) output.error("gtt file already exists for this project");
 
     try {
@@ -18,10 +20,10 @@ module.exports = function () {
       user = yield authenticate(credentials);
       project = yield prompt.project(user.projects);
       if (project.rate) yield createProject(user, project);
-      yield config.create(user, project);
+      yield config.write(user, project);
     } catch (e) {
       output.error(e);
     }
-    output.success("gtt initialized\n You may want to add '.gtt' to .gitignore");
+    output.success("gtt initialized\nYou may want to add '.gtt' to .gitignore");
   })();
 };

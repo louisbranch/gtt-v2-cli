@@ -15,8 +15,8 @@ function *read() {
     file = yield read(FILE);
     json = JSON.parse(file);
   } catch (e) {
-    if (e === "ENOENT") throw(".gtt file not found");
     if (e instanceof SyntaxError) throw("invalid .gtt file");
+    throw(".gtt file not found");
   }
   return json;
 }

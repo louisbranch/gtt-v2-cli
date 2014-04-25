@@ -7,7 +7,7 @@ var output = require("../helpers/output");
 module.exports = function () {
   co(function* () {
     try {
-      var user = yield config.get();
+      var user = yield config.read();
       yield day.start(user);
     } catch (e) {
       output.error(e);
