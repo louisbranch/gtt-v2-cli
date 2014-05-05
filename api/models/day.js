@@ -2,7 +2,8 @@ var request = require("../helpers/request");
 var clock = require("../helpers/clock");
 
 module.exports = {
-  start: start
+  start: start,
+  addTask: addTask
 };
 
 function *start(user) {
@@ -14,3 +15,12 @@ function *start(user) {
   return JSON.parse(res);
 }
 
+function *addTask(user, message) {
+  var url = "/projects/" + user.project +
+            "/days/" + clock.date() +
+            "?end=" + clock.time() +
+            "&message=" + message +
+            "&email=" + user.email +
+            "&token=" + user.token;
+  return yield request.post(url);
+}
