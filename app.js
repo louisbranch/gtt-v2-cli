@@ -1,7 +1,6 @@
 var app = require("commander");
 var init = require("./api/cmds/init");
-var start = require("./api/cmds/start");
-var task = require("./api/cmds/task");
+var day = require("./api/cmds/day");
 
 app
   .version("0.0.1")
@@ -16,5 +15,5 @@ app
 
 if (process.argv.length == 2) app.help(); // Defaults to help
 if (app.init) init();
-if (app.start) start();
-if (app.task) task(app.task);
+if (app.start) day.start();
+if (app.task) day.task(app.task);
