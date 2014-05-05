@@ -17,7 +17,7 @@ describe("clock helper", function(){
   describe("time", function(){
 
     it("formats as ISO string", function(){
-      assert.equal("2014-04-10T03:00:00.000Z", helper.time());
+      assert(helper.time().match(/2014\-04\-10T\d{2}:\d{2}:\d{2}\.\d{3}Z/));
     });
 
   });
