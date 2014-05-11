@@ -131,4 +131,23 @@ describe("day model", function(){
 
   });
 
+  describe("status", function(){
+
+    before(function(){
+      nock("http://localhost:8080/")
+        .get("/v1/projects/test/days/2014-04-10/status" +
+              "?email=me@luizbranco.com&token=12345")
+        .reply(200, "07:15");
+    });
+
+    it("returns the day status", function(done){
+      co(function* () {
+        var response = yield model.status(user);
+        assert.deepEqual(response, "07:15");
+        done();
+      })();
+    });
+
+  });
+
 });

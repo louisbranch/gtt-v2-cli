@@ -51,7 +51,11 @@ function *resume(user) {
 }
 
 function *status(user) {
-  //TODO
+  var url = day(user) +
+            "/status" +
+            "?email=" + user.email +
+            "&token=" + user.token;
+  return yield request.get(url);
 }
 
 function day(user) {
