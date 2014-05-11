@@ -6,7 +6,11 @@ var output = require("../helpers/output");
 
 module.exports = {
   start: start,
-  task: task
+  end: end,
+  task: task,
+  pause: pause,
+  resume: resume,
+  status: status
 };
 
 function command(fn, success, param) {
@@ -21,8 +25,12 @@ function command(fn, success, param) {
   })();
 };
 
-function day() {
+function start() {
   command(day.start, "OK, day has started");
+}
+
+function end() {
+  command(day.end, "OK, day has been finished");
 }
 
 function task(message) {
@@ -35,10 +43,6 @@ function pause() {
 
 function resume() {
   command(day.resume, "OK, day has been resumed");
-}
-
-function end() {
-  command(day.end, "OK, day has been finished");
 }
 
 function status() {
