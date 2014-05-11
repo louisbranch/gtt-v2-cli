@@ -17,3 +17,7 @@ if (process.argv.length == 2) app.help(); // Defaults to help
 if (app.init) init();
 if (app.start) day.start();
 if (app.task) day.task(app.task);
+if (app.pause) day.pause();
+if (app.resume) day.resume();
+if (app.end) day.end();
+if (app.status) day.status();
