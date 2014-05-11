@@ -6,7 +6,11 @@ var model = require("../../api/models/day");
 var clock = require("../../api/helpers/clock");
 
 describe("day model", function(){
-  var DateStub;
+  var user = {
+    email: "me@luizbranco.com",
+    token: "12345",
+    project: "test"
+  };
 
   before(function(){
     sinon.stub(clock, "date", function () {
@@ -34,12 +38,6 @@ describe("day model", function(){
     });
 
     it("creates a new day", function(done){
-      var user = {
-        email: "me@luizbranco.com",
-        token: "12345",
-        project: "test"
-      };
-
       co(function* () {
         var response = yield model.start(user);
         assert.deepEqual({
@@ -52,11 +50,31 @@ describe("day model", function(){
 
   });
 
+  describe("end", function(){
+
+    before(function(){
+      nock("http://localhost:8080/")
+        .put("/v1/projects/test/days/2014-04-10" +
+              "?end=2014-04-10T03:00:00.000Z"  +
+              "&email=me@luizbranco.com&token=12345")
+        .reply(200, "OK");
+    });
+
+    it("ends day", function(done){
+      co(function* () {
+        var response = yield model.end(user);
+        assert.deepEqual(response, "OK");
+        done();
+      })();
+    });
+
+  });
+
   describe("addTask", function(){
 
     before(function(){
       nock("http://localhost:8080/")
-        .post("/v1/projects/test/days/2014-04-10" +
+        .post("/v1/projects/test/days/2014-04-10/tasks" +
               "?end=2014-04-10T03:00:00.000Z"  +
               "&message=important%20task" +
               "&email=me@luizbranco.com&token=12345")
@@ -64,18 +82,51 @@ describe("day model", function(){
     });
 
     it("adds a new task", function(done){
-      var user = {
-        email: "me@luizbranco.com",
-        token: "12345",
-        project: "test"
-      };
-
       co(function* () {
         var response = yield model.addTask(user, "important task");
         assert.deepEqual(response, "OK");
         done();
       })();
+    });
 
+  });
+
+  describe("pause", function(){
+
+    before(function(){
+      nock("http://localhost:8080/")
+        .post("/v1/projects/test/days/2014-04-10/pause" +
+              "?start=2014-04-10T03:00:00.000Z"  +
+              "&email=me@luizbranco.com&token=12345")
+        .reply(200, "OK");
+    });
+
+    it("pauses day", function(done){
+      co(function* () {
+        var response = yield model.pause(user);
+        assert.deepEqual(response, "OK");
+        done();
+      })();
+    });
+
+  });
+
+  describe("resume", function(){
+
+    before(function(){
+      nock("http://localhost:8080/")
+        .post("/v1/projects/test/days/2014-04-10/resume" +
+              "?end=2014-04-10T03:00:00.000Z"  +
+              "&email=me@luizbranco.com&token=12345")
+        .reply(200, "OK");
+    });
+
+    it("resumes a previous pause", function(done){
+      co(function* () {
+        var response = yield model.resume(user);
+        assert.deepEqual(response, "OK");
+        done();
+      })();
     });
 
   });
