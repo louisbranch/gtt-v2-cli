@@ -31,6 +31,7 @@ describe("day model", function(){
     before(function(){
       nock("http://localhost:8080/")
         .post("/v1/projects/test/days?date=2014-04-10" +
+              "&start=2014-04-10T03:00:00.000Z"  +
               "&email=me@luizbranco.com&token=12345")
         .reply(200, {
           date: "2014-04-24"
@@ -54,7 +55,7 @@ describe("day model", function(){
 
     before(function(){
       nock("http://localhost:8080/")
-        .put("/v1/projects/test/days/2014-04-10" +
+        .post("/v1/projects/test/days/2014-04-10/end" +
               "?end=2014-04-10T03:00:00.000Z"  +
               "&email=me@luizbranco.com&token=12345")
         .reply(200, "OK");

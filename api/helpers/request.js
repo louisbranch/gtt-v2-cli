@@ -3,8 +3,7 @@ var SERVER = "http://localhost:8080/v1";
 
 module.exports = {
   get: get,
-  post: post,
-  put: put
+  post: post
 };
 
 function *get(url) {
@@ -13,10 +12,6 @@ function *get(url) {
 
 function *post(url) {
   return yield req("post", url);
-}
-
-function *put(url) {
-  return yield req("put", url);
 }
 
 function *req(method, url) {

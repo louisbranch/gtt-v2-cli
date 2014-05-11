@@ -13,6 +13,7 @@ module.exports = {
 function *start(user) {
   var url = "/projects/" + user.project +
             "/days?date=" + clock.date() +
+            "&start=" + clock.time() +
             credentials(user);
   var res = yield request.post(url);
   return JSON.parse(res);
@@ -20,9 +21,10 @@ function *start(user) {
 
 function *end(user) {
   var url = day(user) +
+            "/end" +
             "?end=" + clock.time() +
             credentials(user);
-  return yield request.put(url);
+  return yield request.post(url);
 }
 
 function *addTask(user, message) {
