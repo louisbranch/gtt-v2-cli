@@ -1,6 +1,6 @@
 {
   "name": "gtt",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Track your billing time through Git, CLI tool",
   "main": "app.js",
   "preferGlobal": true,
