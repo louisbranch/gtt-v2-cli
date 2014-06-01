@@ -8,7 +8,7 @@ describe("user model", function(){
   describe("signup", function(){
 
     before(function(){
-      nock("http://localhost:8080/")
+      nock("http://curry.io/")
         .post("/v1/signup?email=me@luizbranco.com&password=secret")
         .reply(200, "12345");
     });
@@ -36,7 +36,7 @@ describe("user model", function(){
   describe("login", function(){
 
     before(function(){
-      nock("http://localhost:8080/")
+      nock("http://curry.io/")
         .post("/v1/login?email=me@luizbranco.com&password=secret")
         .reply(200, {
           token: "12345",

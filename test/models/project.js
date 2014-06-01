@@ -8,7 +8,7 @@ describe("project model", function(){
   describe("create", function(){
 
     before(function(){
-      nock("http://localhost:8080/")
+      nock("http://curry.io/")
         .post("/v1/projects?name=test&currency=usd&rate=30&" +
               "email=me@luizbranco.com&token=12345")
         .reply(200, "OK");

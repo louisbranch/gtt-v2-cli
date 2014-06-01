@@ -1,5 +1,5 @@
 var request = require("co-request");
-var SERVER = "http://localhost:8080/v1";
+var SERVER = "http://curry.io/v1";
 
 module.exports = {
   get: get,
