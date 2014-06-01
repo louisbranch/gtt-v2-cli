@@ -2,8 +2,11 @@
   "name": "gtt",
   "version": "1.0.0",
   "description": "Track your billing time through Git, CLI tool",
-  "main": "gtt",
+  "main": "app.js",
   "preferGlobal": true,
+  "bin": {
+    "gtt": "bin/gtt"
+  },
   "scripts": {
     "test": "mocha --recursive --harmony --reporter min"
   },
